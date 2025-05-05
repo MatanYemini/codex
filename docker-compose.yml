@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  codex-server:
+    build: 
+      context: ./codex-cli
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - PORT=3000
+    volumes:
+      - ${PWD}:/workdir
+    working_dir: /workdir
+    command: bash -c "/usr/local/share/.config/yarn/global/node_modules/codex-cli/scripts/init_firewall.sh && node /usr/local/share/.config/yarn/global/node_modules/codex-cli/src/server.js"
+    cap_add:
+      - NET_ADMIN

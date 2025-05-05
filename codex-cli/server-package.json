@@ -1,0 +1,10 @@
+{
+  "name": "codex-server",
+  "version": "1.0.0",
+  "description": "HTTP API server for Codex CLI",
+  "type": "module",
+  "dependencies": {
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2"
+  }
+}
