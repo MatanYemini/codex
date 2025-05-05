@@ -54,3 +54,9 @@ RUN chmod +x /usr/local/bin/init_firewall.sh && \
   echo "node ALL=(root) NOPASSWD: /usr/local/bin/init_firewall.sh" > /etc/sudoers.d/node-firewall && \
   chmod 0440 /etc/sudoers.d/node-firewall
 USER node
+
+# Install additional dependencies for server mode
+RUN npm install --global express body-parser
+
+# Expose the API port
+EXPOSE 3000

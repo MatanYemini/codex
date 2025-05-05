@@ -160,6 +160,15 @@ const cli = meow(
         description: "Enable desktop notifications for responses",
       },
 
+      server: {
+        type: "boolean",
+        description: "Run in persistent server mode with HTTP API",
+      },
+      port: {
+        type: "string",
+        description: "Port to use when running in server mode (default: 3000)",
+      },
+
       // Experimental mode where whole directory is loaded in context and model is requested
       // to make code edits in a single pass.
       fullContext: {
@@ -318,6 +327,18 @@ if (fullContextMode) {
   });
   onExit();
   process.exit(0);
+}
+
+if (cli.flags.server) {
+  const serverPath = path.join(__dirname, "server.js");
+  if (cli.flags.port) {
+    process.env.PORT = cli.flags.port;
+  }
+  const serverProcess = spawnSync("node", [serverPath], { 
+    stdio: "inherit",
+    env: process.env
+  });
+  process.exit(serverProcess.status || 0);
 }
 
 // Ensure that all values in additionalWritableRoots are absolute paths.
